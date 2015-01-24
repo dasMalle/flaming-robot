@@ -4,13 +4,15 @@ using System.Collections.Generic;
 
 public class Node : MonoBehaviour
 {
-	enum Direction
+	public enum Direction
 	{
 		NORTH,
 		SOUTH,
 		WEST,
 		EAST
 	}
+
+	public AudioClip ambientClip;
 
 	public static List<Node> nodes = new List<Node>();
 	public static List<int> ids = new List<int>();
@@ -27,6 +29,20 @@ public class Node : MonoBehaviour
 	void Awake ()
 	{
 		nodes.Add (this);
+	}
+
+	public static Node GetNodeById(int id)
+	{
+		for(int i = 0; i < nodes.Count; ++i)
+		{
+			if(nodes[i].id == id)
+			{
+				return nodes[i];
+			}
+		}
+
+		Debug.LogError ("Couldn't find Node with id " + id);
+		return null;
 	}
 
 	public void DrawDebugs()
@@ -47,7 +63,7 @@ public class Node : MonoBehaviour
 		}
 	}
 
-	public void GenerateId()
+	public int GenerateId()
 	{
 		bool generated = false;
 
@@ -57,10 +73,13 @@ public class Node : MonoBehaviour
 
 			if(!ids.Contains(newId))
 			{
+				ids.Add(newId);
 				id = newId;
 				generated = true;
 			}
 		}
+
+		return id;
 	}
 
 	public void AutoConnectNearest()
