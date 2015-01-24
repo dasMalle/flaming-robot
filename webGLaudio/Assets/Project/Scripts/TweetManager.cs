@@ -28,6 +28,8 @@ public class TweetManager : MonoBehaviour
 
 				if(lastTweet != tweet)
 				{
+					Debug.LogError("The most recent tweet: " + tweet);
+
 					string parsedTweet = tweet;
 					string[] splittedString = parsedTweet.Split(':');
 					parsedTweet = splittedString[2].Substring(3);

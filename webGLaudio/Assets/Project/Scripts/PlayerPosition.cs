@@ -16,6 +16,7 @@ public class PlayerPosition : MonoBehaviour
 	Vector3 moveTarget;
 	float movementSpeed = 1.0f;
 	AudioSource ambientSource;
+	string lastAudioName = "";
 
 	void Start()
 	{
@@ -32,7 +33,6 @@ public class PlayerPosition : MonoBehaviour
 		transform.position = Vector3.MoveTowards(transform.position,
 		                                         moveTarget,
 		                                         Time.deltaTime * movementSpeed);
-
 		DebugMovement ();
 	}
 
@@ -49,16 +49,23 @@ public class PlayerPosition : MonoBehaviour
 			targetNodeId = newNode.id;
 			moveTarget = newNode.transform.position;
 
+			Debug.LogError("New target node: " + targetNodeId);
+
 			if(newNode.ambientClip != null)
 			{
-				ambientSource.clip = newNode.ambientClip;
-				ambientSource.loop = true;
-				ambientSource.Play();
+				if(newNode.ambientClip.name != lastAudioName)
+				{
+					ambientSource.clip = newNode.ambientClip;
+					ambientSource.loop = true;
+					ambientSource.Play();
+				}
 			}
 			else
 			{
 				ambientSource.Stop();
 			}
+
+			lastAudioName = targetNode.ambientClip.name;
 		}
 	}
 

@@ -90,6 +90,7 @@ public class PlayerManager : MonoBehaviour
 			if(isGameRunning)
 			{
 				Vector2 positions = DatabaseSaver.GetNodes();
+				Debug.LogError ("Player positions in database " + positions.x + " and " + positions.y);
 				players[0].ChangeTargetNode(Node.GetNodeById((int)positions.x));
 				players[1].ChangeTargetNode(Node.GetNodeById((int)positions.y));
 			}
@@ -99,6 +100,7 @@ public class PlayerManager : MonoBehaviour
 
 	public void SetPlayersToDatabase()
 	{
+		Debug.LogError("Saving nodes to database: " + players[0].GetTargetNodeId() + ", " + players[1].GetTargetNodeId());
 		DatabaseSaver.SaveNodes (players [0].GetTargetNodeId(),
 		                         players [1].GetTargetNodeId());
 	}
