@@ -9,6 +9,7 @@ public class NodeEditor : Editor {
 	{
 		DrawDefaultInspector();
 		Node myTarget = (Node)target;
+		EditorUtility.SetDirty(myTarget);
 
 		if(GUILayout.Button("Generate id"))
 		{
