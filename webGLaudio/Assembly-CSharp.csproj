@@ -46,9 +46,21 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Project\Scripts\AudioMute.cs" />
+     <Compile Include="Assets\Project\Scripts\DatabaseSaver.cs" />
+     <Compile Include="Assets\Project\Scripts\GetTweets.cs" />
      <Compile Include="Assets\Project\Scripts\Node.cs" />
+     <Compile Include="Assets\Project\Scripts\PlayerManager.cs" />
      <Compile Include="Assets\Project\Scripts\PlayerPosition.cs" />
      <Compile Include="Assets\Project\Scripts\RotateAround.cs" />
+     <Compile Include="Assets\Project\Scripts\TriggerOnHold.cs" />
+     <Compile Include="Assets\Project\Scripts\TweetManager.cs" />
+     <Compile Include="Assets\UI\Scripts\RotateSprite.cs" />
+     <Compile Include="Assets\UI\Scripts\SoundOnOff.cs" />
+     <Compile Include="Assets\UI\Scripts\SwapButtonSprite.cs" />
+     <None Include="Assets\UI\Fonts\anke\Anke\OFL.txt" />
+     <None Include="Assets\UI\Fonts\anke\Anke\Readme.txt" />
+     <None Include="Assets\UI\Fonts\nordica-advanced\OFL.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
