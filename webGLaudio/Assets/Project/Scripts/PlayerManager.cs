@@ -100,7 +100,7 @@ public class PlayerManager : MonoBehaviour
 
 	public void SetPlayersToDatabase()
 	{
-		Debug.LogError("Saving nodes to database: " + players[0].GetTargetNodeId() + ", " + players[1].GetTargetNodeId());
+		Debug.Log("Saving nodes to database: " + players[0].GetTargetNodeId() + ", " + players[1].GetTargetNodeId());
 		DatabaseSaver.SaveNodes (players [0].GetTargetNodeId(),
 		                         players [1].GetTargetNodeId());
 	}
