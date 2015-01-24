@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Project/Scripts/PlayerPosition.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Project/Scripts/Node.cs">
     <Files>
-      <File FileName="Assets/Project/Scripts/PlayerPosition.cs" Line="16" Column="16" />
+      <File FileName="Assets/Project/Scripts/PlayerPosition.cs" Line="13" Column="26" />
+      <File FileName="Assets/Project/Scripts/Node.cs" Line="64" Column="87" />
       <File FileName="Assets/Project/Scripts/RotateAround.cs" Line="13" Column="3" />
+      <File FileName="Assets/Project/Editor/NodeEditor.cs" Line="14" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

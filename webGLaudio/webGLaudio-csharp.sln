@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{D2B33559-8232-5E8A-A15E-FEDD38FE84F2}") = "webGLaudio", "Assembly-CSharp-vs.csproj", "{84FB2E30-C156-55DA-A7E8-03660387A7E7}"
 EndProject
+Project("{D2B33559-8232-5E8A-A15E-FEDD38FE84F2}") = "webGLaudio", "Assembly-CSharp-Editor-vs.csproj", "{0E48A6C6-907C-D6EB-0C2A-9CF1D887A0BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{84FB2E30-C156-55DA-A7E8-03660387A7E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84FB2E30-C156-55DA-A7E8-03660387A7E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84FB2E30-C156-55DA-A7E8-03660387A7E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E48A6C6-907C-D6EB-0C2A-9CF1D887A0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E48A6C6-907C-D6EB-0C2A-9CF1D887A0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E48A6C6-907C-D6EB-0C2A-9CF1D887A0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E48A6C6-907C-D6EB-0C2A-9CF1D887A0BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-							GlobalSection(MonoDevelopProperties) = preSolution
+											GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
