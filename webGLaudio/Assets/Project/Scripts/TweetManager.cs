@@ -18,27 +18,37 @@ public class TweetManager : MonoBehaviour
 		StartCoroutine ("UpdateLatestTweets");
 	}
 
+	string ParseTweet(string text)
+	{
+		string parsedTweet = text;
+		string[] splittedString = parsedTweet.Split(':');
+		parsedTweet = splittedString[2].Substring(3);
+		parsedTweet = parsedTweet.Replace("END", "");
+		return parsedTweet;
+	}
+
 	IEnumerator UpdateLatestTweets()
 	{
 		while(true)
 		{
 			if(PlayerManager.isGameRunning)
 			{
-				string tweet = GetTweets.GetOne();
+				string tweet = GetTweets.Get(6);
 
-				if(lastTweet != tweet)
+				Debug.Log(tweet);
+
+				string[] rawTweets = tweet.Split('½');
+
+				for(int i = 0; i < 6; ++i)
 				{
-					Debug.LogError("The most recent tweet: " + tweet);
+					Debug.Log(rawTweets[i]);
+					tweets[i].text = ParseTweet( rawTweets[i]);
+				}
 
-					string parsedTweet = tweet;
-					string[] splittedString = parsedTweet.Split(':');
-					parsedTweet = splittedString[2].Substring(3);
-					parsedTweet = parsedTweet.Replace("END", "");
+				lastTweet = GetTweets.GetLastMove();
 
-					tweets[0].text = parsedTweet;
-
-					lastTweet = tweet;
-					
+				if(!lastTweet.Contains("NULL"))
+				{
 					if(lastTweet.Contains("North"))
 					{
 						if(lastTweet.Contains("P1"))
