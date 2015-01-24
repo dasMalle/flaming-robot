@@ -33,7 +33,7 @@ public class Node : MonoBehaviour
 
 	public static Node GetNodeById(int id)
 	{
-		Debug.LogError ("Trying to find id " + id);
+		//Debug.Log ("Trying to find id " + id);
 
 		for(int i = 0; i < nodes.Count; ++i)
 		{
