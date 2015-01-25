@@ -20,7 +20,7 @@ public class Intro : MonoBehaviour
 
 	void StartGame ()
 	{
-		helpBox.text = "Tweet with tag #TweetLovers\n+ Mr. or Mrs. Dinosaur + north, south, east or west";
+		helpBox.text = "Tweet with tag #TweetLovers\n+ Mr. or Mrs. Dinosaur + north, south, east, west, roar or meteor";
 
 		source.Stop ();
 		audioListener.transform.parent = parentOfListener;
