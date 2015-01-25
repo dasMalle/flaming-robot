@@ -19,6 +19,7 @@ public class PlayerPosition : MonoBehaviour
 	string lastAudioName = "";
 
 	AudioSource footStopSound;
+	public AudioSource roarSound;
 
 	void Start()
 	{

@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 	public PlayerPosition[] players;
 	public Player activePlayer;
 	public GameObject globalListener;
-	const float updateRate = 7.0f;
+	const float updateRate = 2.5f;
 	public SwapButtonSprite swap;
 
 	void Start ()
