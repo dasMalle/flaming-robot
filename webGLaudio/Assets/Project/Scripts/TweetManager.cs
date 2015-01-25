@@ -6,11 +6,11 @@ using System.Collections.Generic;
 public class TweetManager : MonoBehaviour
 {
 	public Text[] tweets;
-
-	List<string> lastTweets = new List<string>();
 	string lastTweet;
 	PlayerManager playerManager;
-	float checkRate = 3.0f;
+	float checkRate = 7.0f;
+	public AudioSource roarSound;
+	public AudioSource meteorSound;
 
 	void Start ()
 	{
@@ -31,17 +31,16 @@ public class TweetManager : MonoBehaviour
 	{
 		while(true)
 		{
-			if(PlayerManager.isGameRunning)
+			Debug.Log("Co2 start: " + Time.time);
+
+			if(PlayerManager.isGameRunning && DatabaseSaver.GetNodes().x != -1)
 			{
 				string tweet = GetTweets.Get(6);
-
-				Debug.Log(tweet);
 
 				string[] rawTweets = tweet.Split('½');
 
 				for(int i = 0; i < 6; ++i)
 				{
-					Debug.Log(rawTweets[i]);
 					tweets[i].text = ParseTweet( rawTweets[i]);
 				}
 
@@ -49,6 +48,8 @@ public class TweetManager : MonoBehaviour
 
 				if(!lastTweet.Contains("NULL"))
 				{
+					Debug.Log(lastTweet);
+
 					if(lastTweet.Contains("North"))
 					{
 						if(lastTweet.Contains("P1"))
@@ -93,6 +94,35 @@ public class TweetManager : MonoBehaviour
 							playerManager.MovePlayer(Node.Direction.WEST, Player.TWO);
 						}
 					}
+					else if(lastTweet.Contains("Roar"))
+					{
+						if(lastTweet.Contains("P1"))
+						{
+							roarSound.transform.position = playerManager.players[0].transform.position;
+							roarSound.Play();
+						}
+						else if(lastTweet.Contains("P2"))
+						{
+							roarSound.transform.position = playerManager.players[1].transform.position;
+							roarSound.Play();
+						}
+					}
+					else if(lastTweet.Contains("Meteor"))
+					{
+						if(lastTweet.Contains("P1"))
+						{
+							meteorSound.Play();
+						}
+						else if(lastTweet.Contains("P2"))
+						{
+							meteorSound.Play();
+						}
+					}
+
+				}
+				else
+				{
+					Debug.LogWarning(lastTweet);
 				}
 			}
 

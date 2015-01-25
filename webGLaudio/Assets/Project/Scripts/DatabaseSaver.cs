@@ -109,6 +109,6 @@ public static class DatabaseSaver {
 		} catch (Exception e) {
 			Debug.Log (e.ToString());
 		}
-		return new Vector2(0,0);
+		return new Vector2(-1, -1);
 	}
 }

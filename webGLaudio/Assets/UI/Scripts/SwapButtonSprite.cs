@@ -8,7 +8,7 @@ public class SwapButtonSprite : MonoBehaviour
 		public Sprite one;
 		public Sprite two;
 
-		public void toggleSprite ()
+		public void ToggleSprite ()
 		{
 				if (this.GetComponent<Image> ().sprite == one) {
 						this.GetComponent<Image> ().sprite = two;

@@ -7,19 +7,18 @@ public class PlayerManager : MonoBehaviour
 	public PlayerPosition[] players;
 	public Player activePlayer;
 	public GameObject globalListener;
-	const float updateRate = 3.0f;
+	const float updateRate = 7.0f;
+	public SwapButtonSprite swap;
 
 	void Start ()
 	{
 		StartCoroutine ("UpdatePlayerPositions");
 		ActivatePlayer (activePlayer);
-		Invoke ("StartGame", 5.0f);
 	}
 
 	void StartGame()
 	{
 		isGameRunning = true;
-		SetPlayersToDatabase ();
 	}
 
 	void StopGame()
@@ -34,6 +33,7 @@ public class PlayerManager : MonoBehaviour
 			if(players[i].player == newPlayer)
 			{
 				globalListener.transform.parent = players[i].transform;
+				globalListener.transform.localPosition = Vector3.zero;
 				globalListener.transform.localRotation = Quaternion.identity;
 			}
 		}
@@ -83,17 +83,55 @@ public class PlayerManager : MonoBehaviour
 		SetPlayersToDatabase ();
 	}
 
+	bool firstTimeGetPositions = true;
+
 	IEnumerator UpdatePlayerPositions()
 	{
 		while(true)
 		{
+			Debug.Log("Co1 start: " + Time.time);
+
 			if(isGameRunning)
 			{
 				Vector2 positions = DatabaseSaver.GetNodes();
-				Debug.LogError ("Player positions in database " + positions.x + " and " + positions.y);
-				players[0].ChangeTargetNode(Node.GetNodeById((int)positions.x));
-				players[1].ChangeTargetNode(Node.GetNodeById((int)positions.y));
+
+				if (positions.x != -1)
+				{
+					Debug.Log("Node positions: " + positions);
+
+					if(positions.x == positions.y)
+					{
+						Debug.Log("You found each other yai! <3");
+						isGameRunning = false;
+						GetComponent<AudioSource>().Play();
+						yield return new WaitForSeconds(10.0f);
+						positions = DatabaseSaver.GetNodes();
+
+						if(positions.x == positions.y)
+						{
+							players[0].RandomSpawn();
+							players[1].RandomSpawn();
+							SetPlayersToDatabase ();
+						}
+
+						isGameRunning = true;
+					}
+					else
+					{
+						//Debug.LogError ("Player positions in database " + positions.x + " and " + positions.y);
+						players[0].ChangeTargetNode(Node.GetNodeById((int)positions.x));
+						players[1].ChangeTargetNode(Node.GetNodeById((int)positions.y));
+					}
+
+					if(firstTimeGetPositions)
+					{
+						firstTimeGetPositions = false;
+						players[0].TeleportToTarget();
+						players[1].TeleportToTarget();
+					}
+				}
 			}
+
 			yield return new WaitForSeconds(updateRate);
 		}
 	}
@@ -116,83 +154,54 @@ public class PlayerManager : MonoBehaviour
 			activePlayer = Player.ONE;
 		}
 
+		swap.ToggleSprite ();
 		ActivatePlayer (activePlayer);
 	}
 
 	public void RotatePlayerClockwiseConstantly()
 	{
-		if(activePlayer == Player.ONE)
-		{
-			players[0].GetComponent<RotateAround>().isConstantlyRotating = true;
-			players[0].GetComponent<RotateAround>().isRotatingDirectionClockwise = true;
-		}
-		else
-		{
-			players[1].GetComponent<RotateAround>().isConstantlyRotating = true;
-			players[1].GetComponent<RotateAround>().isRotatingDirectionClockwise = true;
-		}
+		players[0].GetComponent<RotateAround>().isConstantlyRotating = true;
+		players[0].GetComponent<RotateAround>().isRotatingDirectionClockwise = true;
+		players[1].GetComponent<RotateAround>().isConstantlyRotating = true;
+		players[1].GetComponent<RotateAround>().isRotatingDirectionClockwise = true;
 	}
 
 	public void RotatePlayerCounterClockwiseConstantly()
 	{
-		if(activePlayer == Player.ONE)
-		{
-			players[0].GetComponent<RotateAround>().isConstantlyRotating = true;
-			players[0].GetComponent<RotateAround>().isRotatingDirectionClockwise = false;
-		}
-		else
-		{
-			players[1].GetComponent<RotateAround>().isConstantlyRotating = true;
-			players[1].GetComponent<RotateAround>().isRotatingDirectionClockwise = false;
-		}
+		players[0].GetComponent<RotateAround>().isConstantlyRotating = true;
+		players[0].GetComponent<RotateAround>().isRotatingDirectionClockwise = false;
+		players[1].GetComponent<RotateAround>().isConstantlyRotating = true;
+		players[1].GetComponent<RotateAround>().isRotatingDirectionClockwise = false;
 	}
 
 	public void StopPlayerRotating()
 	{
-		if(activePlayer == Player.ONE)
-		{
-			players[0].GetComponent<RotateAround>().isConstantlyRotating = false;
-		}
-		else
-		{
-			players[1].GetComponent<RotateAround>().isConstantlyRotating = false;
-		}
+		players[0].GetComponent<RotateAround>().isConstantlyRotating = false;
+		players[1].GetComponent<RotateAround>().isConstantlyRotating = false;
 	}
 
 	public void RotatePlayerClockwise()
 	{
-		if(activePlayer == Player.ONE)
-		{
-			players[0].GetComponent<RotateAround>().RotateClockwise();
-		}
-		else
-		{
-			players[1].GetComponent<RotateAround>().RotateClockwise();
-		}
+		players[0].GetComponent<RotateAround>().RotateClockwise();
+		players[1].GetComponent<RotateAround>().RotateClockwise();
 	}
 
 	public void RotatePlayerCounterClockwise()
 	{
-		if(activePlayer == Player.ONE)
-		{
-			players[0].GetComponent<RotateAround>().RotateCounterClockwise();
-		}
-		else
-		{
-			players[1].GetComponent<RotateAround>().RotateCounterClockwise();
-		}
+		players[0].GetComponent<RotateAround>().RotateCounterClockwise();
+		players[1].GetComponent<RotateAround>().RotateCounterClockwise();
 	}
 
 	void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
+
 		if(Input.GetKeyDown(KeyCode.Tab))
 		{
 			ChangePlayer();
-		}
-
-		if(Input.GetKeyDown(KeyCode.Return))
-		{
-			SetPlayersToDatabase();
 		}
 	}
 }

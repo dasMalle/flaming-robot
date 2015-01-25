@@ -4,28 +4,31 @@ using System.Collections;
 public class RotateAround : MonoBehaviour
 {
 	float rotateValue = 0.0f;
-	float rotateSpeed = 30.0f;
+	float rotateSpeed = 80.0f;
+	float targetRotateValue;
 	public bool isConstantlyRotating = false;
 	public bool isRotatingDirectionClockwise = false;
 	public RectTransform compassNeedle;
-	
+
+	void Start()
+	{
+		ResetRotation ();
+	}
+
 	public void RotateClockwise()
 	{
-		rotateValue += rotateSpeed * Time.deltaTime;
-		transform.eulerAngles = Vector3.up * rotateValue;
-		compassNeedle.eulerAngles = -Vector3.forward * (rotateValue - 90.0f);
+		targetRotateValue += rotateSpeed * Time.deltaTime;
 	}
 
 	public void RotateCounterClockwise()
 	{
-		rotateValue -= rotateSpeed * Time.deltaTime;
-		transform.eulerAngles = Vector3.up * rotateValue;
-		compassNeedle.eulerAngles = -Vector3.forward * (rotateValue - 90.0f);
+		targetRotateValue -= rotateSpeed * Time.deltaTime;
 	}
 
 	public void ResetRotation()
 	{
 		rotateValue = 90.0f;
+		targetRotateValue = rotateValue;
 		transform.eulerAngles = Vector3.up * rotateValue;
 		compassNeedle.eulerAngles = -Vector3.forward * (rotateValue - 90.0f);
 	}
@@ -57,5 +60,9 @@ public class RotateAround : MonoBehaviour
 		{
 			ResetRotation();
 		}
+
+		rotateValue += (targetRotateValue - rotateValue) * 0.1f;
+		compassNeedle.eulerAngles = -Vector3.forward * (rotateValue - 90.0f);
+		transform.eulerAngles = Vector3.up * rotateValue;
 	}
 }

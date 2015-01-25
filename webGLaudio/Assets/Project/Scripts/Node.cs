@@ -49,19 +49,19 @@ public class Node : MonoBehaviour
 
 	public void DrawDebugs()
 	{
-		DebugDraw (northNode);
-		DebugDraw (southNode);
-		DebugDraw (westNode);
-		DebugDraw (eastNode);
+		DebugDraw (northNode, Color.blue);
+		DebugDraw (southNode, Color.green);
+		DebugDraw (westNode, Color.yellow);
+		DebugDraw (eastNode, Color.magenta);
 
 		Debug.DrawLine (transform.position, transform.position + transform.forward * radius, Color.cyan);
 	}
 
-	void DebugDraw(Node node)
+	void DebugDraw(Node node, Color color)
 	{
 		if(node != null)
 		{
-			Debug.DrawLine(transform.position, node.transform.position, Color.red);
+			Debug.DrawLine(transform.position, node.transform.position, color);
 		}
 	}
 

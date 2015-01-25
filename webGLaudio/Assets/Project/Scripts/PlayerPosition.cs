@@ -18,12 +18,18 @@ public class PlayerPosition : MonoBehaviour
 	AudioSource ambientSource;
 	string lastAudioName = "";
 
+	AudioSource footStopSound;
+
 	void Start()
 	{
 		ambientSource = GetComponent<AudioSource> ();
+		footStopSound = transform.FindChild ("FootStep").GetComponent<AudioSource> ();
+	}
 
+	public void RandomSpawn()
+	{
 		GameObject[] possibleSpawns = GameObject.FindGameObjectsWithTag (spawnTag);
-
+		
 		ChangeTargetNode(possibleSpawns[Random.Range(0, possibleSpawns.Length)].GetComponent<Node>());
 		TeleportToTarget ();
 	}
@@ -33,7 +39,6 @@ public class PlayerPosition : MonoBehaviour
 		transform.position = Vector3.MoveTowards(transform.position,
 		                                         moveTarget,
 		                                         Time.deltaTime * movementSpeed);
-		DebugMovement ();
 	}
 
 	public int GetTargetNodeId()
@@ -43,13 +48,16 @@ public class PlayerPosition : MonoBehaviour
 
 	public void ChangeTargetNode(Node newNode)
 	{
-		if(newNode != null)
+		if(newNode != null
+		   && newNode != targetNode)
 		{
+			Debug.Log ("Setting a new target node: " + newNode.id);
+
 			targetNode = newNode;
 			targetNodeId = newNode.id;
 			moveTarget = newNode.transform.position;
 
-			Debug.LogError("New target node: " + targetNodeId);
+			//Debug.LogError("New target node: " + targetNodeId);
 
 			if(newNode.ambientClip != null)
 			{
@@ -69,35 +77,42 @@ public class PlayerPosition : MonoBehaviour
 		}
 	}
 
-	void TeleportToTarget()
+	public void TeleportToTarget()
 	{
+		Debug.Log ("Teleporting to target.");
 		transform.position = moveTarget;
 	}
 
 	public void MoveNorth()
 	{
-		ChangeTargetNode (targetNode.northNode);
+		footStopSound.Play();
+		if(targetNode != null)
+			ChangeTargetNode (targetNode.northNode);
 	}
 
 	public void MoveSouth()
 	{
-		ChangeTargetNode (targetNode.southNode);
+		footStopSound.Play();
+		if(targetNode != null)
+			ChangeTargetNode (targetNode.southNode);
 	}
 
 	public void MoveWest()
 	{
-		ChangeTargetNode (targetNode.westNode);
+		footStopSound.Play();
+		if(targetNode != null)
+			ChangeTargetNode (targetNode.westNode);
 	}
 
 	public void MoveEast()
 	{
-		ChangeTargetNode (targetNode.eastNode);
+		footStopSound.Play();
+		if(targetNode != null)
+			ChangeTargetNode (targetNode.eastNode);
 	}
 
 	void DebugMovement()
 	{
-		//TODO: Remove debug movement
-
 		if(player == Player.ONE)
 		{
 			if(Input.GetKeyDown(KeyCode.W))
